@@ -1,0 +1,119 @@
+<link rel="shortcut icon" href="иконка.png" type="image/png">
+<!DOCTYPE html>
+<html>
+<head>
+    <audio autoplay src="C:\Users\admin\Desktop\Проект по веб-дизайну\dan.mp3" loop></audio>
+  <style>
+    #box {
+      border: 1px solid grey;
+      height: 312px;
+      width: 312px;
+        margin:0 0 0 600px;
+    }
+
+    #box input {
+      border: none;
+      float: left;
+      font-size: 70px;
+      height: 100px;
+      margin: 2px;
+      width: 100px;
+        
+    }
+    
+    #resetButton {
+      border: 1px solid grey;
+      font-size: 20px;
+      height: 100px;
+      width: 314px;
+        margin:0 0 0 600px;
+    }
+       a:link{
+    text-decoration: none;
+        font-size: 25px;
+        cursor: crosshair;
+    }
+    button{
+        margin-left: 25px;
+        background: radial-gradient(#5ce0ff,#fa86ff); 
+        cursor:crosshair;
+    }
+  </style>
+  <title>JS Cross</title>
+</head>
+<body background="dcd.png">
+  <div id="box">
+    <input type="button" onclick="onClick(this)" />
+    <input type="button" onclick="onClick(this)" />
+    <input type="button" onclick="onClick(this)" />
+    <input type="button" onclick="onClick(this)" />
+    <input type="button" onclick="onClick(this)" />
+    <input type="button" onclick="onClick(this)" />
+    <input type="button" onclick="onClick(this)" />
+    <input type="button" onclick="onClick(this)" />
+    <input type="button" onclick="onClick(this)" />
+  </div>
+  <input type="button" id="resetButton" onclick="reset()" value="NEW GAME" />
+  <script>
+    var gameBox = document.getElementById('box'), playerIndex = 1, players = ['O','X'], resultValues = [],
+        winningCombinations = [[0, 1, 2], [3, 4, 5], [6, 7, 8], [0, 3, 6], [1, 4, 7], [2, 5, 8], [0, 4, 8], [2, 4, 6]];
+      
+    function isWinning(value) {
+      var combination, i, j;
+        
+      for (i = 0; i < winningCombinations.length; i++) {
+        combination = winningCombinations[i];
+          
+        for (j = 0; j < combination.length; j++) {
+          if (resultValues[combination[j]] != value) break;
+        }
+          
+        if (j == 3) return true;
+      }
+        
+      return false;
+    }
+
+    function reset() {
+      var i, inputs = gameBox.getElementsByTagName('input');
+      
+      // Reset game cells
+      for (i = 0; i < inputs.length; i++) {
+        inputs[i].disabled = inputs[i].value = '';
+      }
+       
+      playerIndex = 1;
+      resultValues = [];
+    }
+
+    function resetIfWinnerFound() {
+      var i, inputs = gameBox.getElementsByTagName('input');
+
+      // Map cell values       
+      for (i = 0; i < inputs.length; i++) {
+        resultValues[i] = inputs[i].value;
+      }
+        
+      // Check players
+      for (i = 0; i < players.length; i++) {
+        if (isWinning(players[i])) {
+          alert('The winner is '+ players[i] + '!');
+          reset();
+          return;
+        }
+      }
+    }
+
+    function onClick(sender) {
+      sender.disabled = "disabled";
+      sender.value = players[playerIndex];
+
+      playerIndex == 1 ? playerIndex-- : playerIndex++;
+        
+      resetIfWinnerFound();
+    }
+  </script>
+    <br>
+     <button><a href="ПРОЕКТ.html">Главная</a></button>
+</body>
+</html>
